@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class='container'>
-		<img src='cookie.png' style='left: 0; width:50%; height:50%;'></img><h1 id='cookiecount' style='color: white;'>Loading...</h1>
+		<img onclick="Click()" src='cookie.png' style='left: 0; width:50%; height:50%;'></img><h1 id='cookiecount' style='color: white;'>Loading...</h1>
 	</div>
 	<div class='container' style='color:lightblue'>
 		<h2 onclick="Buy(0.1,15);">Cursor (15C, 0.1CPS)</h2>
@@ -100,14 +100,16 @@
 		};
 	};
 	function Click(e){
-		e.preventDefault();
-		if(e.changedTouches.length>0){
-			for(var i=0; i<e.changedTouches.length; i++){
+		if(e) e.preventDefault();
+		if(e){
+			if(e.changedTouches){
+				for(var i=0; i<e.changedTouches.length; i++){
+					cookie.click();
+				}
+			} else {
 				cookie.click();
-			}
-		} else {
-			cookie.click();
-		}	
+			}	
+		}
 	}
 	function Buy(a,b){
 		cookie.buy(a,b);
