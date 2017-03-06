@@ -101,7 +101,13 @@
 	};
 	function Click(e){
 		e.preventDefault();
-		cookie.click();
+		if(e.changedTouches.length>0){
+			for(var i=0; i<e.changedTouches.length; i++){
+				cookie.click();
+			}
+		} else {
+			cookie.click();
+		}	
 	}
 	function Buy(a,b){
 		cookie.buy(a,b);
