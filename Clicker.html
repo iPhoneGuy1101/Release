@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cookie Clicker</title>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+			background: black;
+		}
+		.container{
+			border: double 3px gold;
+			padding: 10px;
+			margin: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class='container'>
+		<img onclick='Click();' src='cookie.png' style='left: 0; width:50%; height:50%;'></img><h1 id='cookiecount' style='color: white;'>Loading...</h1>
+	</div>
+	<div class='container' style='color:lightblue'>
+		<h2 onclick="Buy(0.1,15);">Cursor (15C, 0.1CPS)</h2>
+		<h2 onclick="Buy(1,100);">Grandma (100C, 1CPS)</h2>
+		<h2 onclick="Buy(5,450);">Farm (450C, 5CPS)</h2>
+		<h2 onclick="Buy(10,1000);">Mine (1000C, 10CPS)</h2>
+	</div>
+	<div class='container' style='color:red; bottom: 1%'>
+		<h3 onclick='Reset();'>Reset Data</h3>
+	</div>
+	<script>
+
+	/*W3Schools Code*/
+	function setCookie(cname, cvalue, exdays) {
+	    var d = new Date();
+	    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	    var expires = "expires="+d.toUTCString();
+	    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+
+	function getCookie(cname) {
+	    var name = cname + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i = 0; i < ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') {
+	            c = c.substring(1);
+	        }
+	        if (c.indexOf(name) == 0) {
+	            return c.substring(name.length, c.length);
+	        }
+	    }
+	    return "";
+	}
+	/*End W3Schools Code*/
+	if(getCookie("playedbefore")!="yes"){
+		setCookie("playedbefore","yes");
+		setCookie("cookies",0);
+		setCookie("cps",0);
+		setCookie("cpc",1);
+		setCookie("itemsunlocked",JSON.stringify([]));
+	}
+	function Cookie(){
+		this.display = document.getElementById('cookiecount');
+		this.then = 0;
+		this.now = 0;
+		this.cookies = parseInt(getCookie("cookies"));
+		this.cps = parseInt(10*(getCookie("cps")))/10;
+		this.cpc = parseInt(10*(getCookie("cpc")))/10;
+		this.itemsunlocked = (getCookie("itemsunlocked"));
+		this.click = function(){
+			this.cookies++;//=this.cpc;
+			setCookie("cookies",this.cookies);
+		};
+		this.buy = function(cpsboost, cost){
+			if(this.cookies>=cost){
+				this.cookies -= cost;
+				this.cps += cpsboost;
+			}
+			setCookie("cpc",this.cpc);
+			setCookie("cps",this.cps);
+		};
+		this.Update  = function(){
+			this.cookies = Math.round(this.cookies*10)/10;
+			this.cps = Math.round(this.cps*10)/10;
+			this.cpc = Math.round(this.cpc*10)/10;	
+			this.display.innerHTML = "Cookies: "+this.cookies+"<br/>Cookies Per Second: "+this.cps+"<br/>Cookies Per Click: "+this.cpc;
+			now = new Date().getTime();
+			if(now>then+1101) {
+				cookie.Update1();
+				then = now;
+			}
+		}
+		this.Update1 = function(){
+			this.cookies+=this.cps;
+			setCookie("cookies",this.cookies);
+			setCookie("cps",this.cps);
+			setCookie("cpc",this.cpc);
+			setCookie("itemsunlocked",this.itemsunlocked);
+		};
+	};
+	function Click(){
+		cookie.click();
+	}
+	function Buy(a,b){
+		cookie.buy(a,b);
+	}
+	function Update(){
+		cookie.Update();
+		setTimeout(Update);
+	};
+	var cookie = null, then = 0;
+	window.onload = function(){
+		cookie = new Cookie();
+		Update();
+	};
+	function Reset(){
+		setCookie("playedbefore","resetdata");
+		location.reload();
+	}
+	</script>
+</body>
+</html>
