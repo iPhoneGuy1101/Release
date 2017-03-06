@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Basketbles</title>
+<link rel='apple-touch-icon' href='http://www.iconeasy.com/icon/ico/System/NX10/Basketball.ico'>
+<meta name='apple-mobile-web-app-capable' content='yes'></meta>
+<meta name='apple-mobile-web-app-title' content='BasketblesPE'></meta>
+<meta name='mobile-web-app-capable' content='yes'></meta>
+</head>
+<body>
+<style>
+*{padding:0;margin:0;}
+</style>
+<script src='
+https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/p5.js'
+></script>
+<script>
+var basketball;
+var mp;
+var points = 0;
+var hoop;
+var gravity = new p5.Vector(0,0.51);
+
+function setup(){
+  createCanvas(window.innerWidth*1.05,window.innerHeight*1.05);
+  basketball = new Ball();
+  //hoop = loadImage("http://vignette1.wikia.nocookie.net/clubpenguin/images/8/80/Basketball_Net.PNG/revision/20141214162050");
+}
+var mpticks = 3;
+var ts = 1;
+function draw(){
+  if(points<0) points++;
+  //frame.setTitle("Basketball - By JohnJ1101@outlook.com - "+points+" points");
+  background(15);
+  fill(255);
+  //image(hoop,width/2-82,height/3,72,48);
+    fill(222,222,202);
+    stroke(255*0.33);
+    strokeWeight(2);
+  rect(width/2-82,height/3,72,48);
+  fill(0x00,0x99,0xFF);
+  noStroke();
+  var asd = 5;
+  rect(asd*8,height-160,30,mpticks*asd);
+  noFill();
+  stroke(255);
+  strokeWeight(2);
+  rect(asd*8,height-160,30,28.2*asd);
+  rect(asd*8,height-160+17*asd,30,6*asd);
+  if(mp) mpticks += ts;
+  if(mpticks>28){
+    ts = -0.2;
+  }
+  if(mpticks<0) ts=0.3;
+  basketball.update(gravity);
+  textSize(45);
+  text(round(points)+" point"+((points!=1)?"s":""),20,60);
+  //saveFrame("basketball\\frames\\####.png");
+}
+
+// function mousePressed(){
+//   mp = true;
+// }
+
+// function mouseReleased(){
+//     basketball.shoot(mpticks);
+//     mpticks = 1;
+//     mp = false;
+// }
+
+function touchStarted(){
+  basketball.pos = createVector(width*0.5-basketball.size/2,height*0.9-basketball.size/2,4);
+  mp = true;
+}
+
+function touchEnded(){
+    basketball.shoot(mpticks);
+    mpticks = 1;
+    mp = false;
+}
+
+window.addEventListener('touchrelease',touchEnded);
+window.addEventListener('touchend',touchEnded);
+window.addEventListener('touchended',touchEnded);
+
+window.addEventListener('touchmove',mov,true);
+window.addEventListener('touchmoved',mov,true);
+window.addEventListener('touchmoving',mov,true);
+
+function mov(e){
+  e.preventDefault();
+}
+
+// ----------------
+
+function Ball(){
+  this.size = 128;
+  this.pos = createVector(width*0.5-this.size/2,height*0.9-this.size/2,4);
+  this.vel = createVector(0,0,0);
+  //this.ballPNG = loadImage("http://www.tuxpaint.org/stamps/stamps-thumbs/stamps/sports/basketball.jpg");
+
+  this.show=function(){
+    //image(this.ballPNG,this.pos.x,this.pos.y,this.size-(this.pos.z/2),this.size-(this.pos.z/2));
+    fill(234,149,55);
+    stroke(255*0.33);
+    strokeWeight(2);
+    ellipse(this.pos.x+this.size/8,this.pos.y,this.size-(this.pos.z/2),this.size-(this.pos.z/2));
+  }
+  this.update=function(force){
+    if(!(this.pos.y>height*0.9-this.size/2)) this.vel.add(force);
+    if(this.pos.y>height*0.9-this.size/2) this.vel.y = this.vel.y<0?this.vel.y:0;
+    if(this.pos.y>height*0.9-this.size/2) this.vel.z = this.vel.z*0.95;
+    if(this.pos.z>this.size*2||(this.vel.z<0.3&&this.vel.z>0.05)) {this.pos = createVector(width*0.5-basketball.size/2,height*0.9-basketball.size/2,4);}
+    this.pos.add(this.vel);
+    this.show();
+  }
+  this.shoot=function(tossStrength){
+    this.vel.x = 0;
+    this.vel.y = -tossStrength/((height>width)?(1.5):(1.25))*(height>width?(height/700):(height/500));
+    this.vel.z = 2;
+    setTimeout(function(){
+      if(tossStrength>17&&tossStrength<=23){points++;}else{points--;}
+    }, 1000);
+    this.mpticks = 3;
+  }
+}
+</script>
+</body>
