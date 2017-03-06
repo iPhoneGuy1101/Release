@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
 <head>
 	<title>Cookie Clicker</title>
@@ -18,7 +17,7 @@
 </head>
 <body>
 	<div class='container'>
-		<img onclick='Click();' src='cookie.png' style='left: 0; width:50%; height:50%;'></img><h1 id='cookiecount' style='color: white;'>Loading...</h1>
+		<img src='cookie.png' style='left: 0; width:50%; height:50%;'></img><h1 id='cookiecount' style='color: white;'>Loading...</h1>
 	</div>
 	<div class='container' style='color:lightblue'>
 		<h2 onclick="Buy(0.1,15);">Cursor (15C, 0.1CPS)</h2>
@@ -100,7 +99,8 @@
 			setCookie("itemsunlocked",this.itemsunlocked);
 		};
 	};
-	function Click(){
+	function Click(e){
+		e.preventDefault();
 		cookie.click();
 	}
 	function Buy(a,b){
@@ -119,6 +119,9 @@
 		setCookie("playedbefore","resetdata");
 		location.reload();
 	}
+	document.getElementsByTagName('img')[0].addEventListener('click',Click,true);
+	document.getElementsByTagName('img')[0].addEventListener('touchstart',Click,true);
+
 	</script>
 </body>
 </html>
