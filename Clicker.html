@@ -19,17 +19,16 @@
 	<div class='container'>
 		<img onclick="Click()" src='cookie.png' style='left: 0; width:50%; height:50%;'></img><h1 id='cookiecount' style='color: white;'>Loading...</h1>
 	</div>
-	<div class='container' style='color:lightblue'>
-		<h2 onclick="Buy(0.1,15);">Cursor (15C, 0.1CPS)</h2>
+	<div class='container' id='shop' style='color:lightblue'>
+		<!-- <h2 onclick="Buy(0.1,15);">Cursor (15C, 0.1CPS)</h2>
 		<h2 onclick="Buy(1,100);">Grandma (100C, 1CPS)</h2>
 		<h2 onclick="Buy(5,450);">Farm (450C, 5CPS)</h2>
-		<h2 onclick="Buy(10,1000);">Mine (1000C, 10CPS)</h2>
+		<h2 onclick="Buy(10,1000);">Mine (1000C, 10CPS)</h2> -->
 	</div>
 	<div class='container' style='color:red; bottom: 1%'>
 		<h3 onclick='Reset();'>Reset Data</h3>
 	</div>
 	<script>
-
 	/*W3Schools Code*/
 	function setCookie(cname, cvalue, exdays) {
 	    var d = new Date();
@@ -119,13 +118,30 @@
 		setTimeout(Update);
 	};
 	var cookie = null, then = 0;
+	var shop = [
+		{name: "Cursor", cost: 15, cps: 0.1},
+		{name: "Grandma", cost: 100, cps: 1},
+		{name: "Cookie Tree",cost: 300, cps: 3},
+		{name: "Farm", cost: 450, cps: 5},
+		{name: "Mine", cost: 1000, cps: 10},
+		{name: "Cookie Planet", cost: 10000, cps: 111},
+		{name: "Prism", cost: 1000000, cps: 1000}
+	];
+	var sid = document.getElementById('shop');
+	for(var a = 0; a<shop.length; a++){
+		s = shop[a];
+		sid.innerHTML+="<h2 onclick='Buy("+s.cps+","+s.cost+")'>"+s.name+" ("+s.cost+"C, "+s.cps+"CPS)"+"</h2>"
+	}
 	window.onload = function(){
 		cookie = new Cookie();
 		Update();
 	};
 	function Reset(){
-		setCookie("playedbefore","resetdata");
-		location.reload();
+		var a = confirm("Are you sure?");
+		if(a){
+			setCookie("playedbefore","resetdata");
+			location.reload();
+		}	
 	}
 	document.getElementsByTagName('img')[0].addEventListener('click',Click,true);
 	document.getElementsByTagName('img')[0].addEventListener('touchstart',Click,true);
