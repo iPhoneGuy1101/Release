@@ -127,7 +127,7 @@
 			cookie.cpc=modifiedGetCookie("cpc",atob(c));
 			cookie.itemsunlocked=modifiedGetCookie("itemsunlocked",atob(c));
 			location.reload();
-		}
+		};
 	};
 	function Click(e){
 		if(e) e.preventDefault();
@@ -162,12 +162,15 @@
 		s = shop[a];
 		sid.innerHTML+="<h2 onclick='Buy("+s.cps+","+s.cost+")'>"+s.name+" ("+s.cost+"C, "+s.cps+"CPS)"+"</h2>"
 	}
+	function Buy(a,b){
+		cookie.buy(a,b);
+	};
+	
 	window.onload = function(){
 		cookie = new Cookie();
 		Update();
 		ImportData = cookie.ImportData;
 	    ExportData = cookie.ExportData;
-	    Buy = cookie.buy();
 	};
 	function Reset(){
 		var a = confirm("Are you sure?")&&confirm("Really sure?");
@@ -177,7 +180,6 @@
 		}	
 	}
 	var ImportData, ExportData;
-	var Buy;
 	document.getElementsByTagName('img')[0].addEventListener('click',Click,true);
 	document.getElementsByTagName('img')[0].addEventListener('touchstart',Click,true);
 
