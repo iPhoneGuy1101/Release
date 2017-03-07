@@ -27,6 +27,8 @@
 	</div>
 	<div class='container' style='color:red; bottom: 1%'>
 		<h3 onclick='Reset();'>Reset Data</h3>
+		<h3 onclick='ExportData()'>Export</h3>
+		<h3 onclick='ImportData()'>Import</h3>
 	</div>
 	<script>
 	/*W3Schools Code*/
@@ -51,7 +53,23 @@
 	    }
 	    return "";
 	}
+
+	function modifiedGetCookie(cname,cookie) {
+	    var name = cname + "=";
+	    var ca = cookie.split(';');
+	    for(var i = 0; i < ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') {
+	            c = c.substring(1);
+	        }
+	        if (c.indexOf(name) == 0) {
+	            return c.substring(name.length, c.length);
+	        }
+	    }
+	    return "";
+	}
 	/*End W3Schools Code*/
+
 	if(getCookie("playedbefore")!="yes"){
 		setCookie("playedbefore","yes");
 		setCookie("cookies",0);
@@ -68,7 +86,7 @@
 		this.cpc = parseInt(10*(getCookie("cpc")))/10;
 		this.itemsunlocked = (getCookie("itemsunlocked"));
 		this.click = function(){
-			this.cookies++;//=this.cpc;
+			this.cookies+=this.cpc;//=this.cpc;
 			setCookie("cookies",this.cookies);
 		};
 		this.buy = function(cpsboost, cost){
@@ -97,6 +115,19 @@
 			setCookie("cpc",this.cpc);
 			setCookie("itemsunlocked",this.itemsunlocked);
 		};
+		this.ExportData = function(){
+			prompt("OK, here is your code (this code should work forever)",btoa(document.cookie))
+		}
+		this.ImportData = function(){
+			var c=prompt("OK, enter your code here (the long one that you got before)");
+			document.cookie = atob((c));
+
+			cookie.cookies=modifiedGetCookie("cookies",atob(c));
+			cookie.cps=modifiedGetCookie("cps",atob(c));
+			cookie.cpc=modifiedGetCookie("cpc",atob(c));
+			cookie.itemsunlocked=modifiedGetCookie("itemsunlocked",atob(c));
+			location.reload();
+		}
 	};
 	function Click(e){
 		if(e) e.preventDefault();
@@ -110,10 +141,8 @@
 			}	
 		}
 	}
-	function Buy(a,b){
-		cookie.buy(a,b);
-	}
 	function Update(){
+		if(cookie.cpc < 1) cookie.cpc=1
 		cookie.Update();
 		setTimeout(Update);
 	};
@@ -136,14 +165,19 @@
 	window.onload = function(){
 		cookie = new Cookie();
 		Update();
+		ImportData = cookie.ImportData;
+	    ExportData = cookie.ExportData;
+	    Buy = cookie.buy();
 	};
 	function Reset(){
-		var a = confirm("Are you sure?");
+		var a = confirm("Are you sure?")&&confirm("Really sure?");
 		if(a){
 			setCookie("playedbefore","resetdata");
 			location.reload();
 		}	
 	}
+	var ImportData, ExportData;
+	var Buy;
 	document.getElementsByTagName('img')[0].addEventListener('click',Click,true);
 	document.getElementsByTagName('img')[0].addEventListener('touchstart',Click,true);
 
