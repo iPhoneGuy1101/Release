@@ -17,7 +17,8 @@
 </head>
 <body>
 	<div class='container'>
-		<img onclick="Click()" src='cookie.png' style='left: 0; width:50%; height:50%;'></img><h1 id='cookiecount' style='color: white;'>Loading...</h1>
+		<img onclick="Click()" src='cookie.png' style='left: 0; width:50%; height:50%;'></img>
+		<h1 id='cookiecount' style='color: white;'>Loading...</h1>
 	</div>
 	<div class='container' id='shop' style='color:lightblue'>
 		<!-- <h2 onclick="Buy(0.1,15);">Cursor (15C, 0.1CPS)</h2>
@@ -148,24 +149,24 @@
 	};
 	var cookie = null, then = 0;
 	var shop = [
-		{name: "Cursor", cost: 15, cps: 0.1},
-		{name: "Grandma", cost: 100, cps: 1},
-		{name: "Cookie Tree",cost: 300, cps: 3},
-		{name: "Farm", cost: 450, cps: 5},
-		{name: "Mine", cost: 1000, cps: 10},
-		{name: "Cookie Planet", cost: 10000, cps: 111},
-		{name: "Prism", cost: 100000, cps: 1234},
-		{name: "Cookie Converter", cost: 1000000, cps: 12345}
+		{name: "<img src='cr.png' style='width:64px;height:32px;'></img> Cursor", cost: 15, cps: 0.1},
+		{name: "<img src='cg.png' style='width:64px;height:32px;'></img> Grandma", cost: 100, cps: 1},
+		{name: "<img src='cc.png' style='width:64px;height:32px;'></img> Cookie Tree",cost: 300, cps: 3},
+		{name: "<img src='cf.png' style='width:64px;height:32px;'></img> Farm", cost: 450, cps: 5},
+		{name: "<img src='cm.png' style='width:64px;height:32px;'></img> Mine", cost: 1000, cps: 10},
+		{name: "<img src='cp.png' style='width:64px;height:32px;'></img> Cookie Planet", cost: 10000, cps: 111},
+		{name: "<img src='ck.png' style='width:64px;height:32px;'></img> Prism", cost: 100000, cps: 1234},
+		{name: "<img src='cd.png' style='width:64px;height:32px;'></img> Cookie Converter", cost: 1000000, cps: 12345}
 	];
 	var sid = document.getElementById('shop');
 	for(var a = 0; a<shop.length; a++){
 		s = shop[a];
-		sid.innerHTML+="<h2 onclick='Buy("+s.cps+","+s.cost+")'>"+s.name+" ("+s.cost+"C, "+s.cps+"CPS)"+"</h2>"
+		sid.innerHTML+="<h1 onclick='Buy("+s.cps+","+s.cost+")'>"+s.name+" ("+s.cost+"C, "+s.cps+"CPS)"+"</h2>"
 	}
 	function Buy(a,b){
 		cookie.buy(a,b);
 	};
-	
+
 	window.onload = function(){
 		cookie = new Cookie();
 		Update();
