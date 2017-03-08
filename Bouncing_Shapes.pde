@@ -10,7 +10,7 @@ PVector gravity = new PVector(0, 0.1);
 PImage mouse, button;
 int imagecount = 5, load = imagecount = 5, h = round(imagecount*2.5);
 boolean started, click, recording = false;
-boolean hasImages = true, explosions = mode==1;
+boolean hasImages = false, explosions = mode==1;
 boolean bounce = mode==2, agariomode = mode==3;
 ArrayList<PImage> images;
 //Define explosions boolean, tells wether explosions are enabled
@@ -20,6 +20,7 @@ Shape newShape() {
     :(new Square)));
     //:(random(1)<0.5?(new Square()):(new Image()))));
 }
+
 void setup() {//Creates setup function (runs on program launch)
   //frame.setTitle("Bouncing Shapes");//Set title
   size(window.innerWidth,window.innerHeight);//Set window size to 640X360 (360p)
@@ -63,10 +64,18 @@ void drawA() {
   
 }
 void draw() {
+  explosions = mode==1;
+  bounce = mode==2;
+  agariomode = mode==3;
   frameRate(76);
   background(0);
   if (key=='c'&&keyPressed) displayCursor=!displayCursor;//toggle explosions
   if (key=='r'&&keyPressed) recording=!recording;//toggle explosions
+  if (key=='0'&&keyPressed) mode=0;
+  if (key=='1'&&keyPressed) mode=1;
+  if (key=='2'&&keyPressed) mode=2;
+  if (key=='3'&&keyPressed) mode=3;
+
   if(keyPressed) keyPressed=false;
   if (started&&load>=99) drawA();
   if (!started&&load<=98) {
