@@ -28,6 +28,9 @@
     s.pos = new p5.Vector(mouseX,mouseY);
     shapes.push(s);
   }
+	window.addEventListener('touchmoved',function(e){e.preventDefault();},true);
+	window.addEventListener('touchstart',function(e){e.preventDefault();},true);
+	
   function Polygon(){
     this.pos = new p5.Vector(random(width),random(height));
     this.vel = new p5.Vector(random(-2,2),random(-2,2));
