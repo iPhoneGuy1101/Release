@@ -12,6 +12,7 @@
     }
   }
   function draw(){
+    noStroke();
     background(0,0,0,255*0.07);
     for(var s=0; s<shapes.length; s++){
       shapes[s].show();
@@ -32,11 +33,13 @@
 	window.addEventListener('touchstart',function(e){e.preventDefault();},true);
 	
   function Polygon(){
+    this.color = color(random(255),random(255),random(255));
     this.pos = new p5.Vector(random(width),random(height));
     this.vel = new p5.Vector(random(-2,2),random(-2,2));
     this.size = random(16,24);
     this.type = round(random(0,2));
     this.show = function () {
+      fill(this.color);
       if(this.type==0) {
 	ellipse(this.pos.x,this.pos.y,this.size);
       } else if(this.type==1) {
