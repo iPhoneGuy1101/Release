@@ -1,12 +1,12 @@
 <style>
-*{padding:0;margin:0;}
+*{padding:0;margin:0;overflow:none;bottom:0;position:absolute}
 </style>
 <script src='p5.js'></script>
 <script>
   var shapes = [];
 
   function setup(){
-    createCanvas(window.innerWidth,window.innerHeight);
+    createCanvas(window.innerWidth,window.innerHeight*0.8);
     for(var i=0; i<10; i++){
       shapes.push(new Polygon());
     }
