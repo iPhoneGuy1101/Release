@@ -6,7 +6,7 @@
   var shapes = [];
 
   function setup(){
-    createCanvas(window.innerWidth,window.innerHeight*0.8);
+    createCanvas(window.innerWidth,window.innerHeight);
     for(var i=0; i<10; i++){
       shapes.push(new Polygon());
     }
@@ -53,7 +53,7 @@
       if(this.pos.x > width - this.size/2) this.vel.x = -abs(this.vel.x);
       if(this.pos.x < this.size/2) this.vel.x = abs(this.vel.x);
       if(this.pos.y > height - this.size/2) this.vel.y = -abs(this.vel.y);
-      if(this.pos.x < this.size/2) this.vel.y = abs(this.vel.y);
+      if(this.pos.y < this.size/2) this.vel.y = abs(this.vel.y);
     }
   }
 </script> 
