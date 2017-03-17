@@ -90,10 +90,11 @@
 			this.cookies+=this.cpc;//=this.cpc;
 			setCookie("cookies",this.cookies);
 		};
-		this.buy = function(cpsboost, cost){
+		this.buy = function(cpsboost, cost, cpcboost){
 			if(this.cookies>=cost){
 				this.cookies -= cost;
 				this.cps += cpsboost;
+				if(cpcboost>0) this.cpc += parseInt(cpcboost);
 			}
 			setCookie("cpc",this.cpc);
 			setCookie("cps",this.cps);
@@ -158,15 +159,16 @@
 		{name: "<img src='ck.png' style='width:64px;height:32px;'></img> Prism", cost: 100000, cps: 1234},
 		{name: "<img src='cd.png' style='width:64px;height:32px;'></img> Cookie Converter", cost: 1000000, cps: 12345},
 		{name: "<img src='ca.png' style='width:64px;height:32px;'></img> Portal to Cookiverse", cost: 11011101, cps:110101},
-		{name: "<img src='IMG_0019.PNG' style='width:64px;height:32px;'></img> Cookie Fireworks", cost: 123456789, cps: 1234567}
+		{name: "<img src='IMG_0019.PNG' style='width:64px;height:32px;'></img> Cookie Fireworks", cost: 123456789, cps: 1234567},
+		{name: "<img src='sc.png' style='width:64px;height:32px;'></img> Add 1 Cookie Per Click!", cost: 1000000000, cps: 0, cpc: 1}
 	];
 	var sid = document.getElementById('shop');
 	for(var a = 0; a<shop.length; a++){
 		s = shop[a];
-		sid.innerHTML+="<h1 onclick='Buy("+s.cps+","+s.cost+")'>"+s.name+" ("+s.cost+"C, "+s.cps+"CPS)"+"</h2>"
+		sid.innerHTML+="<h1 onclick='Buy("+s.cps+","+s.cost+", "+s.cpc+")'>"+s.name+" ("+s.cost+"C"+(s.cpc?", "+(s.cpc+"CPC)"):", "+(s.cps+"CPS)"))+"</h2>"
 	}
-	function Buy(a,b){
-		cookie.buy(a,b);
+	function Buy(a,b,c){
+		cookie.buy(a,b,c);
 	};
 
 	window.onload = function(){
@@ -176,8 +178,9 @@
 	    ExportData = cookie.ExportData;
 	};
 	function Reset(){
-		var a = confirm("Are you sure?")&&confirm("Really sure?");
+		var a = confirm("Are you sure?")&&confirm("Really sure? NO GOING BACK!!!");
 		if(a){
+			document.cookie="expires=March 14 2015"
 			setCookie("playedbefore","resetdata");
 			location.reload();
 		}	
